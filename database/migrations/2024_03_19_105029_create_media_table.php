@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('media')) {
+            Schema::dropIfExists('media');
+        }
+
         Schema::create('media', function (Blueprint $table) {
             $table->id();
 
@@ -28,5 +32,13 @@ return new class extends Migration
 
             $table->nullableTimestamps();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('media');
     }
 };
