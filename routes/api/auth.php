@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\Auth\AuthenticationController;
 
 Route::post('login', [AuthenticationController::class, 'login'])->name('login');
 Route::post('register', [AuthenticationController::class, 'register'])->name('register');

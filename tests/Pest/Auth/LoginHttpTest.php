@@ -23,8 +23,9 @@ test('user can successfully login', function () {
         'email' => 'success.login@dev.test',
         'password' => 'password'
     ]);
-
     $response->assertOk();
+
+    dump($response->json());
 
     // Checking the validity of the returned token
     $token = $response->json('user.token');
