@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Posts\PostsController;
+use App\Http\Controllers\Post\PostController;
 
-Route::apiResource('posts', PostsController::class);
+Route::apiResource('posts', PostController::class);
 
 //Route::apiResources([
-//    'projects'       => PostsController::class,
+//    'projects'       => PostController::class,
 //]);
 
-// php artisan make:controller PostsController --api --resource --requests
+// php artisan make:controller PostController --api --resource --requests
 

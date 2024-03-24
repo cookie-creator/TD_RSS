@@ -2,6 +2,7 @@
 
 namespace App\Services\ParseRSS;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Saloon\XmlWrangler\XmlReader;
 
@@ -13,8 +14,13 @@ class ParsePostService
      */
     public function parsePosts($content)
     {
-        $reader = XmlReader::fromString($content);
-        $data = $reader->values();
+        try {
+            $data = $this->getDataFromXML($content);
+        } catch (Exception $e) {
+            dump($content);
+            dd($e->getMessage());
+            $data = $this->getDataFromXML($content);
+        }
 
         foreach ($data['rss']['channel']['item'] as $post)
         {
@@ -24,19 +30,27 @@ class ParsePostService
         return collect($this->posts);
     }
 
+    private function getDataFromXML($content) {
+        $reader = XmlReader::fromString($content);
+        return $reader->values();
+    }
+
     private function collectPost($itemData)
     {
-        $data['title'] = $itemData['title'];
-        $data['guid'] = $itemData['guid'];
-        $data['date'] = $itemData['pubDate'];
-        $data['description'] = $this->clearDescription($itemData['description']);
-        $data['thumbnail'] = $itemData['media:thumbnail'];
-        $data['content'] = $itemData['content:encoded'];
-        $data['link'] = $itemData['link'];
-        $data['category'] = $itemData['category'];
-        $data['slug'] = str_replace(env('FEED_URL'),'', $itemData['link']);
-        $data['image'] = $this->getImageFromDescription($data['description']);
-
+        try {
+            $data['title'] = $itemData['title'];
+            $data['guid'] = $itemData['guid'];
+            $data['date'] = $itemData['pubDate'];
+            $data['description'] = $this->clearDescription($itemData['description']);
+            $data['thumbnail'] = $itemData['media:thumbnail'];
+            $data['content'] = $itemData['content:encoded'];
+            $data['link'] = $itemData['link'];
+            $data['category'] = $itemData['category'];
+            $data['slug'] = str_replace(env('FEED_URL'),'', $itemData['link']);
+            $data['image'] = $this->getImageFromDescription($data['description']);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
         return $data;
     }
 

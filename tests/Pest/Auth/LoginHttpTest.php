@@ -25,8 +25,6 @@ test('user can successfully login', function () {
     ]);
     $response->assertOk();
 
-    dump($response->json());
-
     // Checking the validity of the returned token
     $token = $response->json('user.token');
     $response = $this->withHeaders([

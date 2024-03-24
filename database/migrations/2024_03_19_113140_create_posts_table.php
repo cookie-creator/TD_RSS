@@ -24,13 +24,13 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
+            //$table->foreign('category_id')->references('id')->on('categories');
 
-            $table->string('description');
-            $table->string('thumbnail');
-            $table->text('content');
-            $table->string('link');
-            $table->string('slug');
+            $table->string('description')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->text('content')->nullable();
+            $table->string('link')->nullable();
+            $table->string('slug')->nullable();
             $table->text('text')->nullable();
 
             $table->timestamps();
