@@ -23,7 +23,6 @@ test('user can successfully login', function () {
         'email' => 'success.login@dev.test',
         'password' => 'password'
     ]);
-
     $response->assertOk();
 
     // Checking the validity of the returned token

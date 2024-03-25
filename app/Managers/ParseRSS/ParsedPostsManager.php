@@ -2,6 +2,7 @@
 
 namespace App\Managers\ParseRSS;
 
+use App\Helpers\PostHelper;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -65,7 +66,7 @@ class ParsedPostsManager
         if (!$category) {
             $category = new Category();
             $category->name = $categoryTitle;
-            $category->slug = $this->makeSlug($categoryTitle);
+            $category->slug = PostHelper::makeSlug($categoryTitle);
             $category->save();
         }
         return $category;
@@ -75,14 +76,14 @@ class ParsedPostsManager
      * @param string $string
      * @return string
      */
-    public function makeSlug(string $string): string
-    {
-        $slug = strtolower($string);
-        $slug = preg_replace('/[^a-z0-9-_\s]/', '', $slug);
-        $slug = str_replace(' ', '-', $slug);
-        $slug = preg_replace('/-+/', '-', $slug);
-        $slug = trim($slug, '-');
-
-        return $slug;
-    }
+//    public function makeSlug(string $string): string
+//    {
+//        $slug = strtolower($string);
+//        $slug = preg_replace('/[^a-z0-9-_\s]/', '', $slug);
+//        $slug = str_replace(' ', '-', $slug);
+//        $slug = preg_replace('/-+/', '-', $slug);
+//        $slug = trim($slug, '-');
+//
+//        return $slug;
+//    }
 }
